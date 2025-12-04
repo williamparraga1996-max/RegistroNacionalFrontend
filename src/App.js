@@ -38,7 +38,33 @@ function App() {
       setLoading(false);
     }
   };
-
+  
+  const descargarExcel = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/personas/descargar/excel`);
+    
+      if (!response.ok) throw new Error('Error al descargar');
+    
+      // Crear blob y descargar
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'registro-nacional.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    
+      setError('✅ Excel descargado exitosamente');
+    } catch (err) {
+      setError('❌ Error al descargar: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const buscar = async () => {
     if (!searchNombre && !searchCiudad) {
       cargarPersonas();
