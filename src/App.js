@@ -245,13 +245,6 @@ function App() {
           <div key={persona.id} className="persona-card">
             <div className="persona-header">
               <h3>{persona.nombre} {persona.apellido}</h3>
-              <button
-                onClick={() => eliminar(persona.id)}
-                className="btn-delete"
-                title="Eliminar"
-              >
-                🗑️
-              </button>
             </div>
             
             {persona.ciudad && (
