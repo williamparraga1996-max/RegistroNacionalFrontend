@@ -172,6 +172,13 @@ function App() {
         >
           {showForm ? '❌ Cancelar' : '➕ Agregar Persona'}
         </button>
+        <button
+          onClick={descargarExcel}
+          disabled={loading}
+          className="btn btn-download"
+        >
+          {loading ? '⏳ Descargando...' : '📊 Descargar Excel'}
+        </button>
       </div>
 
       {showForm && (
