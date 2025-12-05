@@ -24,6 +24,7 @@ function App() {
     cargarPersonas();
   }, []);
 
+  // 👇 CARGAR: Ordena por fecha DESC (más nuevos primero)
   const cargarPersonas = async () => {
     setLoading(true);
     setError('');
@@ -31,6 +32,7 @@ function App() {
       const response = await fetch(`${API_URL}/personas`);
       if (!response.ok) throw new Error('Error al cargar personas');
       const data = await response.json();
+      // Los datos ya vienen ordenados por fecha DESC desde el backend
       setPersonas(data);
     } catch (err) {
       setError('❌ Error al cargar: ' + err.message);
@@ -39,6 +41,7 @@ function App() {
     }
   };
   
+  // 📊 DESCARGAR EXCEL
   const descargarExcel = async () => {
     setLoading(true);
     try {
@@ -65,6 +68,7 @@ function App() {
     }
   };
   
+  // 👇 BUSCAR: Ordena por fecha DESC (más nuevos primero)
   const buscar = async () => {
     if (!searchNombre && !searchCiudad) {
       cargarPersonas();
@@ -81,6 +85,7 @@ function App() {
       const response = await fetch(`${API_URL}/personas/buscar?${params}`);
       if (!response.ok) throw new Error('Error en búsqueda');
       const data = await response.json();
+      // Los datos ya vienen ordenados por fecha DESC desde el backend
       setPersonas(data);
     } catch (err) {
       setError('❌ Error en búsqueda: ' + err.message);
@@ -131,27 +136,6 @@ function App() {
       setError('✅ Persona guardada exitosamente');
     } catch (err) {
       setError('❌ Error al guardar: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const eliminar = async (id) => {
-    if (!window.confirm('¿Está seguro de que desea eliminar esta persona?')) {
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_URL}/personas/${id}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) throw new Error('Error al eliminar');
-      await cargarPersonas();
-      setError('✅ Persona eliminada');
-    } catch (err) {
-      setError('❌ Error al eliminar: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -293,7 +277,7 @@ function App() {
             )}
             
             <p className="date">
-              📅 {new Date(persona.fecha).toLocaleDateString('es-EC')}
+              📅 {new Date(persona.fecha.split('T')[0]).toLocaleDateString('es-EC')}
             </p>
           </div>
         ))}
