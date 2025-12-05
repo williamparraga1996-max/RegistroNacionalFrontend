@@ -160,7 +160,7 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>📋 Registro Nacional</h1>
+        <h1>📋 Registro Nacional Infieles 🇪🇨</h1>
         <p>Gestiona tu registro de personas</p>
       </header>
 
