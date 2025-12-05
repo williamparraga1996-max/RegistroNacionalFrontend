@@ -277,7 +277,17 @@ function App() {
             )}
             
             <p className="date">
-              📅 {persona.fecha ? new Date(persona.fecha).toLocaleDateString('es-EC') : 'N/A'}
+              📅 {persona.fecha ? (() => {
+                const fecha = new Date(persona.fecha);
+                const fechaEcuador = new Date(fecha.getTime() + (5 * 60 * 60 * 1000));
+                return fechaEcuador.toLocaleString('es-EC', { 
+                  year: 'numeric', 
+                  month: '2-digit', 
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                });
+              })() : 'N/A'}
             </p>
           </div>
         ))}
