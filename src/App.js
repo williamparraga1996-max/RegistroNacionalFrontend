@@ -277,7 +277,7 @@ function App() {
             )}
             
             <p className="date">
-              📅 {new Date(persona.fecha.split('T')[0]).toLocaleDateString('es-EC')}
+              📅 {persona.fecha ? new Date(persona.fecha).toLocaleDateString('es-EC') : 'N/A'}
             </p>
           </div>
         ))}
